@@ -143,11 +143,8 @@ export function HyperObject() {
       planetRef.current.rotation.y += delta * 1;
 
       const perspectiveFactor = THREE.MathUtils.mapLinear(z, -orbitRadius, orbitRadius, 0.4, 1.6);
-      const baseScale = tl.current ? (tl.current.targets().find((t: any) => t === planetRef.current?.scale) as any)?.x || 0 : 0;
-      // Note: Since we use GSAP for base scale, we might need to multiply it here
-      // But for simplicity in this refactor, let's just use the current scale and apply perspective
-      planetRef.current.scale.multiplyScalar(perspectiveFactor / (planetRef.current.scale.x / (baseScale || 0.001)));
-      // Correction: Let's just manually set it for now to avoid complex math in useFrame
+      
+      // Calculate base scale manually to combine with perspective factor
       const pScale = THREE.MathUtils.lerp(0, 0.3, THREE.MathUtils.smoothstep(offset, 0.45, 0.6));
       planetRef.current.scale.setScalar(pScale * perspectiveFactor);
 
