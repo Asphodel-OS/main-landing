@@ -278,7 +278,7 @@ export function HyperObject() {
       </group>
 
       {annotations.map((anno, i) => (
-        <AnnotationLine key={i} position={anno.pos} target={anno.stage === 'planet' && planetRef.current ? planetRef.current.position : anno.target} visible={offset >= anno.offsetRange[0] && offset <= anno.offsetRange[1]} />
+        <AnnotationLine key={i} position={anno.pos} target={anno.stage === 'planet' && planetRef.current ? planetRef.current.position : anno.target} visible={scroll.offset >= anno.offsetRange[0] && scroll.offset <= anno.offsetRange[1]} />
       ))}
     </group>
   );
@@ -292,9 +292,11 @@ function AnnotationLine({ position, target, visible }: { position: THREE.Vector3
     }
   });
   return (
-    <line visible={visible}>
-      <bufferGeometry ref={lineRef} />
-      <lineBasicMaterial color="white" transparent opacity={0.5} depthTest={false} />
-    </line>
+    <group visible={visible}>
+      <line>
+        <bufferGeometry ref={lineRef} />
+        <lineBasicMaterial color="white" transparent opacity={0.5} depthTest={false} />
+      </line>
+    </group>
   );
 }
